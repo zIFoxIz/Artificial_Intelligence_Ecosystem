@@ -22,8 +22,7 @@ def apply_blur_filter(image_path, radius=2, output_path=None):
     """
     try:
         img = Image.open(image_path)
-        img_resized = img.resize((128, 128))
-        img_blurred = img_resized.filter(ImageFilter.GaussianBlur(radius=radius))
+        img_blurred = img.filter(ImageFilter.GaussianBlur(radius=radius))
         
         if output_path is None:
             base, ext = os.path.splitext(image_path)
@@ -48,7 +47,6 @@ def apply_vintage_filter(image_path, output_path=None):
     try:
         img = Image.open(image_path).convert('RGB')
         img = img.resize((256, 256))
-        
         # Convert to sepia tone
         img_array = np.array(img, dtype=np.float32)
         sepia_filter = np.array([[0.272, 0.534, 0.131],
@@ -85,7 +83,6 @@ def apply_edge_detection_filter(image_path, output_path=None):
     try:
         img = Image.open(image_path).convert('L')
         img = img.resize((256, 256))
-        
         # Apply edge detection
         img_edges = img.filter(ImageFilter.FIND_EDGES)
         
@@ -113,7 +110,6 @@ def apply_posterize_filter(image_path, bits=3, output_path=None):
     try:
         img = Image.open(image_path).convert('RGB')
         img = img.resize((256, 256))
-        
         # Posterize: reduce colors
         img_posterized = ImageOps.posterize(img, bits=bits)
         
@@ -140,7 +136,6 @@ def apply_neon_glow_filter(image_path, output_path=None):
     try:
         img = Image.open(image_path).convert('RGB')
         img = img.resize((256, 256))
-        
         # Create neon effect using edge detection and color inversion
         img_edges = img.filter(ImageFilter.FIND_EDGES)
         
@@ -178,7 +173,6 @@ def apply_oil_painting_filter(image_path, radius=4, output_path=None):
     try:
         img = Image.open(image_path).convert('RGB')
         img = img.resize((256, 256))
-        
         # Apply median filter for oil painting effect
         img_oil = img.filter(ImageFilter.MedianFilter(size=2*radius+1))
         
