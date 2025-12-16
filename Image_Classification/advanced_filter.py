@@ -11,13 +11,13 @@ import os
 from pathlib import Path
 
 
-def apply_blur_filter(image_path, radius=2, output_path=None):
+def apply_blur_filter(image_path, radius=15, output_path=None):
     """
     Apply Gaussian blur filter.
     
     Args:
         image_path: Path to input image
-        radius: Blur radius (default 2)
+        radius: Blur radius (default 15 for noticeable blur)
         output_path: Path to save output
     """
     try:
@@ -46,7 +46,6 @@ def apply_vintage_filter(image_path, output_path=None):
     """
     try:
         img = Image.open(image_path).convert('RGB')
-        img = img.resize((256, 256))
         # Convert to sepia tone
         img_array = np.array(img, dtype=np.float32)
         sepia_filter = np.array([[0.272, 0.534, 0.131],
@@ -62,9 +61,9 @@ def apply_vintage_filter(image_path, output_path=None):
         
         if output_path is None:
             base, ext = os.path.splitext(image_path)
-            output_path = f"{base}_vintage{ext}"
+            output_path = f"{base}_vintage.png"
         
-        img_vintage.save(output_path)
+        img_vintage.save(output_path, quality=95)
         print(f"  Vintage filter applied. Saved as '{output_path}'")
         return output_path
     except Exception as e:
@@ -226,7 +225,7 @@ def main():
         print("\nProcessing image...")
         
         if choice == "1":
-            apply_blur_filter(image_path, radius=3)
+            apply_blur_filter(image_path, radius=15)
         elif choice == "2":
             apply_vintage_filter(image_path)
         elif choice == "3":
